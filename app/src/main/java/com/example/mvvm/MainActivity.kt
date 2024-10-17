@@ -1,6 +1,7 @@
 package com.example.mvvm
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,6 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonStart.setOnClickListener {
             // TODO: create code to start timer
+            Log.d(TAG, "onCreate: Timer starts")
         }
+    }
+
+    companion object {
+        val TAG = "XXXX"
     }
 }
