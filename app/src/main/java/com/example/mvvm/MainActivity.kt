@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,6 +14,9 @@ import com.example.mvvm.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+//    val viewModel = MyViewModel()  // DO NOT CREATE VIEWMODEL IN ACTIVITY
+
+    val viewModel by viewModels<MyViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,20 +33,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun startTimer(start: Long, step: Long) {
-        object : CountDownTimer(start, step) {
-
-            @SuppressLint("SetTextI18n")
-            override fun onTick(millisUntilFinished: Long) {
-                binding.textViewTime.text = (millisUntilFinished / 1000).toInt().toString()
-                Log.d(TAG, "onTick: $millisUntilFinished, activity = ${this@MainActivity}")
-            }
-
-            override fun onFinish() {
-                binding.textViewTime.text = "Timer is over"
-                Log.d(TAG, "onFinish: Timer is over")
-            }
-        }.start()
+        viewModel.startTimer(100_000, 1_000)
     }
 
     override fun onDestroy() {
