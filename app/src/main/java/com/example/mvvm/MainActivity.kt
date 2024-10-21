@@ -1,6 +1,7 @@
 package com.example.mvvm
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,9 +21,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonStart.setOnClickListener {
-            // TODO: create code to start timer
+            startTimer(20_000, 1_000)
             Log.d(TAG, "onCreate: Timer starts")
         }
+    }
+
+    private fun startTimer(start: Long, step: Long) {
+        object : CountDownTimer(start, step) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                Log.d(TAG, "onTick: $millisUntilFinished")
+            }
+
+            override fun onFinish() {
+                Log.d(TAG, "onFinish: Timer is over")
+            }
+        }.start()
     }
 
     companion object {
