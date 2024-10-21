@@ -1,5 +1,6 @@
 package com.example.mvvm
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -16,6 +17,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Log.d(TAG, "onCreate: activity = $this")
+
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
@@ -29,14 +32,23 @@ class MainActivity : AppCompatActivity() {
     private fun startTimer(start: Long, step: Long) {
         object : CountDownTimer(start, step) {
 
+            @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
-                Log.d(TAG, "onTick: $millisUntilFinished")
+                binding.textViewTime.text = (millisUntilFinished / 1000).toInt().toString()
+                Log.d(TAG, "onTick: $millisUntilFinished, activity = ${this@MainActivity}")
             }
 
             override fun onFinish() {
+                binding.textViewTime.text = "Timer is over"
                 Log.d(TAG, "onFinish: Timer is over")
             }
         }.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        Log.d(TAG, "onDestroy: ")
     }
 
     companion object {
