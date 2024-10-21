@@ -1,14 +1,9 @@
 package com.example.mvvm
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.mvvm.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -29,8 +24,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonStart.setOnClickListener {
             startTimer(20_000, 1_000)
+//            viewModel.startThread()
             Log.d(TAG, "onCreate: Timer starts")
         }
+
+        viewModel.timerLiveData.observe(this) { currentTime: Long ->
+            binding.textViewTime.text = (currentTime / 1_000).toInt().toString()
+        }
+
+//        (viewModel.timerLiveData as MutableLiveData<Long>).value = 100_500_100
+//        viewModel.timerLiveData.value = 90_000_000
     }
 
 
