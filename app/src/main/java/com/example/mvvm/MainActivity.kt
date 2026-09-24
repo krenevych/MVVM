@@ -13,13 +13,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
-        binding.buttonStart.setOnClickListener {
-            // TODO: create code to start timer
-            Log.d(TAG, "onCreate: Timer starts")
+        binding.btnStart.setOnClickListener {
+            startTimer()
         }
+
+    }
+
+
+    private fun startTimer() {
+        Log.d(TAG, "onCreate: Timer starts")
+
+        // TODO: create code to start timer
     }
 
     companion object {
