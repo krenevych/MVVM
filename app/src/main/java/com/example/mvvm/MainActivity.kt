@@ -1,7 +1,6 @@
 package com.example.mvvm
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +23,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.timerLiveData.observe(this) { milliSeconds: Long ->
+            if (milliSeconds == -100500L){
+                binding.tvTimer.text = "Timer is over!"
+            } else {
+                val secondsLeft = milliSeconds / 1_000L
+                binding.tvTimer.text = secondsLeft.toString()
+            }
+        }
+
         binding.btnStart.setOnClickListener {
             startTimer()
         }
@@ -31,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startTimer() {
-        viewModel.startTimer(this)
+        viewModel.startTimer()
     }
 
     companion object {
