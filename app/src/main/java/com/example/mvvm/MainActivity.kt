@@ -3,13 +3,18 @@ package com.example.mvvm
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
 import com.example.mvvm.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    // TODO: make binding private
+    lateinit var binding: ActivityMainBinding
+
+    // FIXME: create viewModel in correct way!!!
+//    private val viewModel = TimerViewModel()
+    private val viewModel by viewModels<TimerViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,23 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     private fun startTimer() {
-        Log.d(TAG, "onCreate: Timer starts")
-
-        object : CountDownTimer(20_000, 1_000){
-            override fun onTick(millisUntilFinished: Long) {
-                Log.d(TAG, "onTick: $millisUntilFinished")
-                val secondsLeft = millisUntilFinished / 1000
-                binding.tvTimer.text = secondsLeft.toString()
-            }
-
-            override fun onFinish() {
-                Log.d(TAG, "onFinish: Timer is over!")
-                binding.tvTimer.text = "Timer is over!"
-            }
-
-        }.start()
+        viewModel.startTimer(this)
     }
 
     companion object {
