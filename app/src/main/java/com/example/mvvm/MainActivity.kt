@@ -1,6 +1,7 @@
 package com.example.mvvm
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
@@ -24,42 +25,23 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        Log.d(TAG, "onStart: $this")
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        Log.d(TAG, "onStop:  $this")
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        Log.d(TAG, "onPause: $this")
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        Log.d(TAG, "onResume: $this")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        Log.d(TAG, "onDestroy: $this")
-    }
-
-
 
     private fun startTimer() {
         Log.d(TAG, "onCreate: Timer starts")
 
-        // TODO: create code to start timer
+        object : CountDownTimer(20_000, 1_000){
+            override fun onTick(millisUntilFinished: Long) {
+                Log.d(TAG, "onTick: $millisUntilFinished")
+                val secondsLeft = millisUntilFinished / 1000
+                binding.tvTimer.text = secondsLeft.toString()
+            }
+
+            override fun onFinish() {
+                Log.d(TAG, "onFinish: Timer is over!")
+                binding.tvTimer.text = "Timer is over!"
+            }
+
+        }.start()
     }
 
     companion object {
